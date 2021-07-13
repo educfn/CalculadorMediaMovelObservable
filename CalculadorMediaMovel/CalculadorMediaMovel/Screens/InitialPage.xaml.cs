@@ -99,7 +99,6 @@ namespace CalculadorMediaMovel.Screens
             else vetor[ultimaPosicao++] = novoValorDiario;
         }
 
-        #region Metodos_auxiliadores
         private bool stringSomenteNumeros(string s)
         {
             bool ehNumero = true;
@@ -117,9 +116,6 @@ namespace CalculadorMediaMovel.Screens
             return ehNumero;
         }
 
-        #endregion
-
-        #region botoes
         private void botaoInicial_Clicked(object sender, EventArgs e)
         {
             
@@ -175,7 +171,6 @@ namespace CalculadorMediaMovel.Screens
             System.Environment.Exit(0);
         }
 
-        #endregion
 
     }//Fim da partial class InitialPage
 
