@@ -57,7 +57,9 @@ namespace CalculadorMediaMovel.Screens
                     //Inicializando o 'vetor'.
                     //TO DO: Implementar verificacao da variavel 'tamanhoDoVetor' para verificar se o valor esta zero ou negativo.
                     vetor = new ObservableCollection<int>();
-                    vetor.CollectionChanged += vetor_MudancaNaLista;
+                    vetor.CollectionChanged += vetor_calcularMediaMovel;
+                    vetor.CollectionChanged += vetor_calcularMediaSimples;
+                    vetor.CollectionChanged += vetor_mostrarMedias;
                    
                 }
 
@@ -68,10 +70,18 @@ namespace CalculadorMediaMovel.Screens
             return error;
         }
 
-        private void vetor_MudancaNaLista(object sender, NotifyCollectionChangedEventArgs e)
+        private void vetor_calcularMediaMovel(object sender, NotifyCollectionChangedEventArgs e)
         {
             calcularMediaMovel();
-            calcularMediaSimples();
+        }
+
+        private void vetor_calcularMediaSimples(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            calcularMediaSimples();          
+        }
+
+        private void vetor_mostrarMedias(object sender, NotifyCollectionChangedEventArgs e)
+        {      
             mostrarMedias();
         }
 
@@ -94,14 +104,14 @@ namespace CalculadorMediaMovel.Screens
 
             int somaDosValores = 0, quantidadeDeValores = vetor.Count;
 
-            for (int i = 0; i < vetor.Count - 1; i++)
+            for (int i = 0; i < vetor.Count; i++)
             {
                 somaDosValores += (int) vetor[i];
             }
 
             mediaSimples = somaDosValores / quantidadeDeValores;
 
-            labelMensagemParaUsuario.Text = "Terminado Calculando Media Simples";
+            labelMensagemParaUsuario.Text = "Terminado Calculo Media Simples";
         }
 
         public void calcularMediaMovel()
@@ -119,7 +129,7 @@ namespace CalculadorMediaMovel.Screens
 
                 mediaMovel = somaDosValores / quantidadeDeValores;
 
-                labelMensagemParaUsuario.Text = "Terminado Calculando Media Movel";
+                labelMensagemParaUsuario.Text = "Terminado Calculo Media Movel";
             }
         }
 
