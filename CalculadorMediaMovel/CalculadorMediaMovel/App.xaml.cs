@@ -2,7 +2,7 @@
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace CalculadorMediaMovel
+namespace CalculadorMediaMovelObservable
 {
     public partial class App : Application
     {

@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 
-namespace CalculadorMediaMovel
+namespace CalculadorMediaMovelObservable
 {
     public partial class MainPage : ContentPage
     {

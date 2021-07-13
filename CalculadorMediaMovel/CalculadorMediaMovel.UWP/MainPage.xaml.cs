@@ -13,7 +13,7 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
-namespace CalculadorMediaMovel.UWP
+namespace CalculadorMediaMovelObservable.UWP
 {
     public sealed partial class MainPage
     {
@@ -21,7 +21,7 @@ namespace CalculadorMediaMovel.UWP
         {
             this.InitializeComponent();
 
-            LoadApplication(new CalculadorMediaMovel.App());
+            LoadApplication(new CalculadorMediaMovelObservable.App());
         }
     }
 }

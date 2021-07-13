@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -7,16 +8,16 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace CalculadorMediaMovel.Screens
+namespace CalculadorMediaMovelObservable.Screens
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class InitialPage : ContentPage
     {
         private static bool primeiraVez = true;
-        private static int[] vetor;
+        private static ObservableCollection<int> vetor;
         private static int mediaMovel = 0;
+        private static int mediaSimples = 0;
         private static int valorDiario = 0;
-        private static int ultimaPosicao = 0;
 
 
         public InitialPage()
@@ -27,8 +28,6 @@ namespace CalculadorMediaMovel.Screens
         private bool coletarDados() 
         {
             bool error = false;
-
-            int tamanhoDoVetor = 0;
 
             //Verifica se as entradas estao vazias.
             if ((primeiraVez && entryValorTamanhoVetor.Text == "") || entryValorDiaro.Text == "")
@@ -49,18 +48,7 @@ namespace CalculadorMediaMovel.Screens
 
             if(error == false)
             {
-                
-                if (vetor == null)
-                {
-                    tamanhoDoVetor = int.Parse(entryValorTamanhoVetor.Text);
-                    //Inicializando o 'vetor'.
-                    //TO DO: Implementar verificacao da variavel 'tamanhoDoVetor' para verificar se o valor esta zero ou negativo.
-                    vetor = new int[tamanhoDoVetor];
-                   
-                }
-
                 valorDiario = int.Parse(entryValorDiaro.Text);
-
             }
 
             return error;
@@ -145,7 +133,7 @@ namespace CalculadorMediaMovel.Screens
                 
             }
 
-        }//Fim do metodo 'botaoInicial_Clicked'
+        }
 
         private void botao_reset_Clicked(object sender, EventArgs e)
         {
@@ -172,6 +160,6 @@ namespace CalculadorMediaMovel.Screens
         }
 
 
-    }//Fim da partial class InitialPage
+    }
 
-}//Fim do namespace CalculadorMediaMovel.Screens
+}

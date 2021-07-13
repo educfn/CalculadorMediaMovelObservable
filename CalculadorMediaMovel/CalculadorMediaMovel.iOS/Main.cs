@@ -5,7 +5,7 @@ using System.Linq;
 using Foundation;
 using UIKit;
 
-namespace CalculadorMediaMovel.iOS
+namespace CalculadorMediaMovelObservable.iOS
 {
     public class Application
     {
