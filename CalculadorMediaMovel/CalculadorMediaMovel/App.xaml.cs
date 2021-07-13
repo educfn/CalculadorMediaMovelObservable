@@ -9,6 +9,7 @@ namespace CalculadorMediaMovel
         public App()
         {
             InitializeComponent();
+
             MainPage = new Screens.InitialPage();
         }
 
