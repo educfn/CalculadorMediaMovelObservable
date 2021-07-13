@@ -42,10 +42,10 @@
             />
             
             <Button
-                x:Name="botaoInicial"
+                x:Name="botaoEnviar"
                 FontSize="Medium"
                 Text="Enviar"
-                Clicked="botaoInicial_Clicked"
+                Clicked="botaoEnviar_Clicked"
             />
 
             <Button
