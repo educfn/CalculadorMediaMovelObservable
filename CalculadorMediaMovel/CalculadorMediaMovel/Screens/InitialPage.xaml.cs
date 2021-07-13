@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace CalculadorMediaMovel.Screens
+namespace CalculadorMediaMovelObservable.Screens
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class InitialPage : ContentPage
