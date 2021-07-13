@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,10 +15,11 @@ namespace CalculadorMediaMovel.Screens
     public partial class InitialPage : ContentPage
     {
         private static bool primeiraVez = true;
-        private static int[] vetor;
+        private static ObservableCollection<int> vetor;
         private static int mediaMovel = 0;
+        private static int mediaSimples = 0;
         private static int valorDiario = 0;
-        private static int ultimaPosicao = 0;
+        private static int tamanhoDoVetor = 0;
 
 
         public InitialPage()
@@ -27,8 +30,6 @@ namespace CalculadorMediaMovel.Screens
         private bool coletarDados() 
         {
             bool error = false;
-
-            int tamanhoDoVetor = 0;
 
             //Verifica se as entradas estao vazias.
             if ((primeiraVez && entryValorTamanhoVetor.Text == "") || entryValorDiaro.Text == "")
@@ -55,7 +56,8 @@ namespace CalculadorMediaMovel.Screens
                     tamanhoDoVetor = int.Parse(entryValorTamanhoVetor.Text);
                     //Inicializando o 'vetor'.
                     //TO DO: Implementar verificacao da variavel 'tamanhoDoVetor' para verificar se o valor esta zero ou negativo.
-                    vetor = new int[tamanhoDoVetor];
+                    vetor = new ObservableCollection<int>();
+                    vetor.CollectionChanged += vetor_MudancaNaLista;
                    
                 }
 
@@ -66,40 +68,72 @@ namespace CalculadorMediaMovel.Screens
             return error;
         }
 
-        private void popularVetor(int valor)
+        private void vetor_MudancaNaLista(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            calcularMediaMovel();
+            calcularMediaSimples();
+            mostrarMedias();
+        }
+
+        private void popularVetor(int valor, int tamanhaDoVetorAPopular)
         {
             //Populando array 'vetor' com o mesmo valor.
             //TO DO: Verificar se 'valor' esta com valor zero ou negativo.
             //TO DO: Verificar se o vetor foi inicializado.
-            for (int i = 0; i < vetor.Length; i++)
+
+            for (int i = 0; i < tamanhaDoVetorAPopular - 1; i++)
             {
-                vetor[i] = valor;
+                vetor.Add(valor);
             }
+
         }
      
-        public void calcularMediaMovel()
+        public void calcularMediaSimples()
         {
-            labelMensagemParaUsuario.Text = "Calculando Media Movel";
+            labelMensagemParaUsuario.Text = "Calculando Media Simples";
 
-            int somaDosValores = 0, quantidadeDeValores = vetor.Length;
+            int somaDosValores = 0, quantidadeDeValores = vetor.Count;
 
-            for (int i = 0; i < vetor.Length;i++)
+            for (int i = 0; i < vetor.Count - 1; i++)
             {
-                somaDosValores += vetor[i];
+                somaDosValores += (int) vetor[i];
             }
 
-            mediaMovel = somaDosValores / quantidadeDeValores;
+            mediaSimples = somaDosValores / quantidadeDeValores;
 
-            labelMensagemParaUsuario.Text = "Media Movel:" + mediaMovel;
+            labelMensagemParaUsuario.Text = "Terminado Calculando Media Simples";
+        }
+
+        public void calcularMediaMovel()
+        {
+            if (vetor.Count >= 7)
+            {          
+                labelMensagemParaUsuario.Text = "Calculando Media Movel";
+
+                int somaDosValores = 0, quantidadeDeValores = 7, indexUltimoItem = vetor.Count - 1;
+
+                for (int i = indexUltimoItem; i > indexUltimoItem - quantidadeDeValores; i--)
+                {
+                    somaDosValores += (int)vetor[i];
+                }
+
+                mediaMovel = somaDosValores / quantidadeDeValores;
+
+                labelMensagemParaUsuario.Text = "Terminado Calculando Media Movel";
+            }
+        }
+
+        private void mostrarMedias()
+        {
+            labelMensagemParaUsuario.Text = "Media Movel: " + mediaMovel +
+                "\nMedia Simples: " + mediaSimples;
         }
 
         private void colocarNovoValorDiario(int novoValorDiario)
         {
-            if (ultimaPosicao >= vetor.Length) ultimaPosicao = 0;
-            else vetor[ultimaPosicao++] = novoValorDiario;
+            vetor.Add(novoValorDiario);
         }
 
-        #region Metodos_auxiliadores
         private bool stringSomenteNumeros(string s)
         {
             bool ehNumero = true;
@@ -117,10 +151,7 @@ namespace CalculadorMediaMovel.Screens
             return ehNumero;
         }
 
-        #endregion
-
-        #region botoes
-        private void botaoInicial_Clicked(object sender, EventArgs e)
+        private void botaoEnviar_Clicked(object sender, EventArgs e)
         {
             
             labelMensagemParaUsuario.Text = "";
@@ -129,8 +160,7 @@ namespace CalculadorMediaMovel.Screens
             {
                 if (primeiraVez == true)
                 {
-                    popularVetor(valorDiario);
-                    calcularMediaMovel();
+                    popularVetor(valorDiario, tamanhoDoVetor);
                     labelSubTituloTamanhoVetor.IsEnabled = false;
                     labelSubTituloTamanhoVetor.IsVisible = false;
                     entryValorTamanhoVetor.IsEnabled = false;
@@ -143,13 +173,12 @@ namespace CalculadorMediaMovel.Screens
                 else
                 {
                     colocarNovoValorDiario(valorDiario);
-                    calcularMediaMovel();
                     entryValorDiaro.Text = "";
                 }
                 
             }
 
-        }//Fim do metodo 'botaoInicial_Clicked'
+        }
 
         private void botao_reset_Clicked(object sender, EventArgs e)
         {
@@ -157,7 +186,6 @@ namespace CalculadorMediaMovel.Screens
             vetor = null;
             mediaMovel = 0;
             valorDiario = 0;
-            ultimaPosicao = 0;
             labelSubTituloTamanhoVetor.Text = "Informe a quantidade de valore usados na media movel:";
             labelSubTituloTamanhoVetor.IsVisible = true;
             labelSubTituloTamanhoVetor.IsEnabled = true;
@@ -168,15 +196,13 @@ namespace CalculadorMediaMovel.Screens
             entryValorDiaro.Text = "";
             labelMensagemParaUsuario.Text = "";
 
-        }//Fim do metodo 'botao_sair_Clicked'
+        }
 
         private void botao_sair_Clicked(object sender, EventArgs e)
         {
             System.Environment.Exit(0);
         }
 
-        #endregion
+    }
 
-    }//Fim da partial class InitialPage
-
-}//Fim do namespace CalculadorMediaMovel.Screens
+}
