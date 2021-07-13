@@ -1,0 +1,69 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CalculadorMediaMovel.Screens.InitialPage">
+    
+    <ContentPage.Content>
+        
+        <StackLayout>
+            
+            <Label
+                   Text="Calculador de Media Movel" 
+                   FontSize="Medium"
+            />
+            
+            <Label x:Name="labelSubTituloTamanhoVetor"
+                   Text="Informe a quantidade de valore usados na media movel:"
+                   TextColor="Crimson"
+                   FontSize="Medium"       
+            />
+            
+            <Entry x:Name="entryValorTamanhoVetor" 
+                   Text=""
+                   FontSize="Medium"
+            />
+            
+            <Label x:Name="labelSubTituloValorDiario"
+                   Text="Preencha o valor Diario:"
+                   TextColor="Blue"
+                   FontSize="Medium"       
+            />
+            
+            <Entry x:Name="entryValorDiaro" 
+                   Text=""
+                   FontSize="Medium"
+            />
+            
+            <Label
+                   x:Name="labelMensagemParaUsuario" 
+                   FontSize="Medium"
+                   TextColor="Black"
+                   Text=""
+            />
+            
+            <Button
+                x:Name="botaoInicial"
+                FontSize="Medium"
+                Text="Enviar"
+                Clicked="botaoInicial_Clicked"
+            />
+
+            <Button
+                x:Name="botao_reset"
+                FontSize="Medium"
+                Text="Reset"
+                Clicked="botao_reset_Clicked"
+            />
+
+            <Button
+                x:Name="botao_sair"
+                FontSize="Medium"
+                Text="Sair"
+                Clicked="botao_sair_Clicked"
+            />  
+                
+        </StackLayout>
+        
+    </ContentPage.Content>
+    
+</ContentPage>
