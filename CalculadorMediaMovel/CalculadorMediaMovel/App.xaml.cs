@@ -9,7 +9,6 @@ namespace CalculadorMediaMovelObservable
         public App()
         {
             InitializeComponent();
-
             MainPage = new Screens.InitialPage();
         }
 
